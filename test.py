@@ -24,7 +24,7 @@ class TestHmm(unittest.TestCase):
         self.start_prob, self.inter_prob, self.stop_prob = get_emission_probabilities()
         self.init_prob = get_initial_probabilities(self.codon_frequency,1)
 
-
+    """
     def test_get_central_probabilities(self):
         central_prob = get_central_probabilities(self.codon_frequency, 1)
         expected_cp = dict()
@@ -33,10 +33,11 @@ class TestHmm(unittest.TestCase):
         expected_cp[STOP_CODON_B + "0"] = log(0.1)
         
         self.assertEqual(central_prob, expected_cp)
+    """
 
 
     def test_get_states(self):
-        states = get_states(self.codon_frequency, self.start_prob, self.inter_prob, self.stop_prob)
+        states = get_states(self.codon_frequency, self.start_prob, self.inter_prob, self.stop_prob, {})
         self.assertEqual(13, len(states))
         self.assertIn("ATG0", states)
         self.assertIn("ATG1", states)
@@ -54,7 +55,7 @@ class TestHmm(unittest.TestCase):
 
 
     def test_get_genes(self):
-        states = get_states(self.codon_frequency, self.start_prob, self.inter_prob, self.stop_prob)
+        states = get_states(self.codon_frequency, self.start_prob, self.inter_prob, self.stop_prob, {})
         state_sequence = ["INT", "INT", "INT", "STT0", "STT1", "STT2", "ATG0", "ATG1", "ATG2", "SPA0", "SPA1", "SPA2", "INT", "INT"]
         genes = output_genes(state_sequence, states)
 
@@ -71,19 +72,19 @@ class TestHmm(unittest.TestCase):
 
     def test_read_genes(self):
         genes = read_genes("../test.gene", complement=False)
-        expected = [(2,5),(8,10)]
+        expected = [(1,4),(7,9)]
         self.assertEqual(expected, genes)
 
         genes = read_genes("../test.gene", complement=True)
-        expected = [(8,10)]
+        expected = [(7,9)]
         self.assertEqual(expected, genes)
 
 
     def test_get_metrics(self):
-        expected = [(1,2), (4,5), (7,9), (10,12)]
-        genes_tested = [(1,2), (5,5), (6,7), (10,11)]
+        expected = [(1,2), (4,5), (10,12)]
+        genes_tested = [(1,2), (6,7), (10,11)]
 
-        expected_metrics = (1, 3, 3)
+        expected_metrics = (2, 1, 1)
         self.assertEqual(expected_metrics, get_metrics(expected, genes_tested))
 
 

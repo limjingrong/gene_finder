@@ -17,6 +17,7 @@ def tag_sequence(sequence, genes_list):
     prev_end = -1
     for (start_inc, end_inc) in genes_list:
         no_genes_length = start_inc - (prev_end+1)
+        assert no_genes_length == len(sequence[prev_end+1:start_inc]), str(no_genes_length) + " " +str(start_inc) + " " + str(prev_end) + " " + str(len(sequence[prev_end+1:start_inc]))
         no_genes = zip(sequence[prev_end+1:start_inc], [0] * no_genes_length)
         no_genes = [(a,b) for (a,b) in no_genes]
         labels.extend(no_genes)

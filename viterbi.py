@@ -68,7 +68,7 @@ def viterbi(obs, init_probs, states):
         state_name = B[state_name][i]
 
     l.reverse()
-    print("Final backpointer trace: ", l)
+    #print("Final backpointer trace: ", l)
     return (l, max_final)
 
 
@@ -90,5 +90,5 @@ def get_max_prev_state(V, state_name, i, states):
             prev_max = value
             max_state_name = prev_state_name
 
-    # print(prev_max, max_state_name)
+    #print(prev_max, max_state_name)
     return (prev_max, max_state_name)
